@@ -4,105 +4,105 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="Customer_table_creation" author="Pikoff">
-        <createTable tableName="Customer">
-            <column name="id"       type="integer" />
-            <column name="email"    type="varchar[255]" />
-            <column name="name"     type="varchar[255]" />
-            <column name="phone"    type="varchar[255]" />
-            <column name="adress"   type="varchar[255]" />
+    <changeSet id="customer_table_creation" author="Pikoff">
+        <createTable tableName="customer">
+            <column name="id"       type="bigint" />
+            <column name="email"    type="varchar(255)" />
+            <column name="name"     type="varchar(255)" />
+            <column name="phone"    type="varchar(255)" />
+            <column name="address"  type="varchar(255)" />
         </createTable>
-        <addPrimaryKey constraintName="customer_pk" tableName="Customer" columnNames="id" />
+        <addPrimaryKey constraintName="customer_pk" tableName="customer" columnNames="id" />
     </changeSet>
 
-    <changeSet id="ShoppingBasket_table_creation" author="Pikoff">
-        <createTable tableName="ShoppingBasket">
-            <column name="id"             type="integer" />
-            <column name="customer_id"    type="integer" />
+    <changeSet id="shoppingBasket_table_creation" author="Pikoff">
+        <createTable tableName="shoppingBasket">
+            <column name="id"             type="bigint" />
+            <column name="customer_id"    type="bigint" />
         </createTable>
-        <addPrimaryKey constraintName="shoppingBasket_pk" tableName="ShoppingBasket" columnNames="id" />
-        <addForeignKeyConstraint baseTableName="ShoppingBasket" baseColumnNames="customer_id"
+        <addPrimaryKey constraintName="shoppingBasket_pk" tableName="shoppingBasket" columnNames="id" />
+        <addForeignKeyConstraint baseTableName="shoppingBasket" baseColumnNames="customer_id"
                                  constraintName="shoppingBasket_customer_fk"
-                                 referencedTableName="Customer" referencedColumnNames="id"/>
+                                 referencedTableName="customer" referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="Publisher_table_creation" author="Pikoff">
-        <createTable tableName="Publisher">
-            <column name="id"       type="integer" />
-            <column name="name"     type="varchar[255]" />
-            <column name="adress"   type="varchar[255]" />
-            <column name="phone"    type="varchar[255]" />
-            <column name="url"      type="varchar[255]" />
+    <changeSet id="publisher_table_creation" author="Pikoff">
+        <createTable tableName="publisher">
+            <column name="id"       type="bigint" />
+            <column name="name"     type="varchar(255)" />
+            <column name="address"  type="varchar(255)" />
+            <column name="phone"    type="varchar(255)" />
+            <column name="url"      type="varchar(255)" />
         </createTable>
-        <addPrimaryKey constraintName="publisher_pk" tableName="Publisher" columnNames="id" />
+        <addPrimaryKey constraintName="publisher_pk" tableName="publisher" columnNames="id" />
     </changeSet>
 
-    <changeSet id="Author_table_creation" author="Pikoff">
-        <createTable tableName="Author">
-            <column name="id"       type="integer" />
-            <column name="name"     type="varchar[255]" />
-            <column name="adress"   type="varchar[255]" />
-            <column name="url"      type="varchar[255]" />
+    <changeSet id="author_table_creation" author="Pikoff">
+        <createTable tableName="author">
+            <column name="id"       type="bigint" />
+            <column name="name"     type="varchar(255)" />
+            <column name="address"  type="varchar(255)" />
+            <column name="url"      type="varchar(255)" />
         </createTable>
-        <addPrimaryKey constraintName="author_pk" tableName="Author" columnNames="id" />
+        <addPrimaryKey constraintName="author_pk" tableName="author" columnNames="id" />
     </changeSet>
 
-    <changeSet id="Warehouse_table_creation" author="Pikoff">
-        <createTable tableName="Warehouse">
-            <column name="id"       type="integer" />
-            <column name="phone"    type="varchar[255]" />
-            <column name="adress"   type="varchar[255]" />
+    <changeSet id="warehouse_table_creation" author="Pikoff">
+        <createTable tableName="warehouse">
+            <column name="id"       type="bigint" />
+            <column name="phone"    type="varchar(255)" />
+            <column name="address"  type="varchar(255)" />
         </createTable>
-        <addPrimaryKey constraintName="warehouse_pk" tableName="Warehouse" columnNames="id" />
+        <addPrimaryKey constraintName="warehouse_pk" tableName="warehouse" columnNames="id" />
     </changeSet>
 
-    <changeSet id="Book_table_creation" author="Pikoff">
-        <createTable tableName="Book">
-            <column name="id"               type="integer" />
-            <column name="isbn"             type="varchar[255]" />
-            <column name="publisher_id"     type="integer" />
-            <column name="author_id"        type="integer" />
+    <changeSet id="book_table_creation" author="Pikoff">
+        <createTable tableName="book">
+            <column name="id"               type="bigint" />
+            <column name="isbn"             type="varchar(255)" />
+            <column name="publisher_id"     type="bigint" />
+            <column name="author_id"        type="bigint" />
             <column name="year"             type="integer" />
-            <column name="title"            type="varchar[255]" />
+            <column name="title"            type="varchar(255)" />
             <column name="price"            type="integer" />
         </createTable>
-        <addPrimaryKey constraintName="book_pk" tableName="Book" columnNames="id" />
-        <addForeignKeyConstraint baseTableName="Book" baseColumnNames="publisher_id"
+        <addPrimaryKey constraintName="book_pk" tableName="book" columnNames="id" />
+        <addForeignKeyConstraint baseTableName="book" baseColumnNames="publisher_id"
                                  constraintName="book_publisher_fk"
-                                 referencedTableName="Publisher" referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="Book" baseColumnNames="author_id"
+                                 referencedTableName="publisher" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book" baseColumnNames="author_id"
                                  constraintName="book_author_fk"
-                                 referencedTableName="Author" referencedColumnNames="id"/>
+                                 referencedTableName="author" referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="ShoppingBasketBook_table_creation" author="Pikoff">
-        <createTable tableName="ShoppingBasketBook">
-            <column name="id"                   type="integer" />
-            <column name="shoppingBasket_id"    type="integer" />
-            <column name="book_id"              type="integer" />
+    <changeSet id="shoppingBasketBook_table_creation" author="Pikoff">
+        <createTable tableName="shoppingBasketBook">
+            <column name="id"                   type="bigint" />
+            <column name="shoppingBasket_id"    type="bigint" />
+            <column name="book_id"              type="bigint" />
             <column name="count"                type="integer" />
         </createTable>
-        <addPrimaryKey constraintName="shoppingBasketBook_pk" tableName="ShoppingBasketBook" columnNames="id" />
-        <addForeignKeyConstraint baseTableName="ShoppingBasketBook" baseColumnNames="shoppingBasket_id"
+        <addPrimaryKey constraintName="shoppingBasketBook_pk" tableName="shoppingBasketBook" columnNames="id" />
+        <addForeignKeyConstraint baseTableName="shoppingBasketBook" baseColumnNames="shoppingBasket_id"
                                  constraintName="shoppingBasketBook_shoppingBasket_fk"
-                                 referencedTableName="ShoppingBasket" referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="ShoppingBasketBook" baseColumnNames="book_id"
+                                 referencedTableName="shoppingBasket" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="shoppingBasketBook" baseColumnNames="book_id"
                                  constraintName="shoppingBasketBook_book_fk"
-                                 referencedTableName="Book" referencedColumnNames="id"/>
+                                 referencedTableName="book" referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="WarehouseBook_table_creation" author="Pikoff">
-        <createTable tableName="WarehouseBook">
-            <column name="id"            type="integer" />
-            <column name="book_id"       type="integer" />
-            <column name="warehouse_id"  type="integer" />
+    <changeSet id="warehouseBook_table_creation" author="Pikoff">
+        <createTable tableName="warehouseBook">
+            <column name="id"            type="bigint" />
+            <column name="book_id"       type="bigint" />
+            <column name="warehouse_id"  type="bigint" />
         </createTable>
-        <addPrimaryKey constraintName="warehouseBook_pk" tableName="WarehouseBook" columnNames="id" />
-        <addForeignKeyConstraint baseTableName="WarehouseBook" baseColumnNames="book_id"
+        <addPrimaryKey constraintName="warehouseBook_pk" tableName="warehouseBook" columnNames="id" />
+        <addForeignKeyConstraint baseTableName="warehouseBook" baseColumnNames="book_id"
                                  constraintName="warehouseBook_book_fk"
-                                 referencedTableName="Book" referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="WarehouseBook" baseColumnNames="warehouse_id"
+                                 referencedTableName="book" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="warehouseBook" baseColumnNames="warehouse_id"
                                  constraintName="warehouseBook_warehouse_fk"
-                                 referencedTableName="Warehouse" referencedColumnNames="id"/>
+                                 referencedTableName="warehouse" referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

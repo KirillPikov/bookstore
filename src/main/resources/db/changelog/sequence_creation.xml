@@ -6,9 +6,10 @@
 
     <changeSet author="Pikoff" id="common_sequence_creation">
         <createSequence
-                        incrementBy="1"
-                        sequenceName="common_seq"
-                        minValue="100"
-                        startValue="100"/>
+                sequenceName="common_seq"
+                startValue="1"
+                incrementBy="1"
+                minValue="0"
+        />
     </changeSet>
 </databaseChangeLog>

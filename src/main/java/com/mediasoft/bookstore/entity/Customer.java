@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +12,7 @@ import java.util.Set;
 public class Customer {
 
     @Id
-    @SequenceGenerator(name="common_seq", sequenceName="common_seq")
+    @SequenceGenerator(name="common_seq", sequenceName="common_seq", allocationSize = 1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="common_seq")
     private Long id;
 
@@ -25,5 +25,5 @@ public class Customer {
     private String address;
 
     @OneToMany(mappedBy = "customer")
-    private Set<ShoppingBasket> shoppingBaskets;
+    private List<ShoppingBasket> shoppingBaskets;
 }

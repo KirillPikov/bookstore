@@ -12,11 +12,11 @@ import java.util.List;
 public class ShoppingBasket {
 
     @Id
-    @SequenceGenerator(name="common_seq", sequenceName="common_seq")
+    @SequenceGenerator(name="common_seq", sequenceName="common_seq", allocationSize = 1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="common_seq")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Customer customer;
 

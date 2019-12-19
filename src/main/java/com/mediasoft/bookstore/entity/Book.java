@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +12,7 @@ import java.util.Set;
 public class Book {
 
     @Id
-    @SequenceGenerator(name="common_seq", sequenceName="common_seq")
+    @SequenceGenerator(name="common_seq", sequenceName="common_seq", allocationSize = 1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="common_seq")
     private Long id;
 
@@ -32,6 +32,6 @@ public class Book {
 
     private Integer price;
 
-    @OneToMany
-    private Set<WarehouseBook> warehouseBook;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<WarehouseBook> warehouseBook;
 }

@@ -21,22 +21,28 @@ repositories {
 }
 
 dependencies {
+	//-----------------------------< SpringBoot starters >------------------------
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.2.1.RELEASE'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	//-----------------------------< Liquibase >----------------------------------
 	implementation 'org.liquibase:liquibase-core'
 
+	//-----------------------------< Postgres >-----------------------------------
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
 
+	//-----------------------------< Lombok >-------------------------------------
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	//-----------------------------< Swagger >------------------------------------
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	compile group: 'io.swagger', name: 'swagger-annotations', version: '1.5.22'
-
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
 }
 
 test {

@@ -91,15 +91,15 @@
     <changeSet id="shopping_basket_book_table_creation" author="Pikoff">
         <createTable tableName="shopping_basket_book">
             <column name="id"                   type="bigint" />
-            <column name="shoppingBasket_id"    type="bigint" />
+            <column name="shopping_basket_id"    type="bigint" />
             <column name="book_id"              type="bigint" />
             <column name="count"                type="integer" />
         </createTable>
-        <addNotNullConstraint tableName="shopping_basket_book" columnName="shoppingBasket_id" />
+        <addNotNullConstraint tableName="shopping_basket_book" columnName="shopping_basket_id" />
         <addNotNullConstraint tableName="shopping_basket_book" columnName="book_id" />
         <addNotNullConstraint tableName="shopping_basket_book" columnName="count" />
         <addPrimaryKey constraintName="shopping_basket_book_pk" tableName="shopping_basket_book" columnNames="id" />
-        <addForeignKeyConstraint baseTableName="shopping_basket_book" baseColumnNames="shoppingBasket_id"
+        <addForeignKeyConstraint baseTableName="shopping_basket_book" baseColumnNames="shopping_basket_id"
                                  constraintName="shopping_basket_book___shopping_basket_fk"
                                  referencedTableName="shopping_basket" referencedColumnNames="id"/>
         <addForeignKeyConstraint baseTableName="shopping_basket_book" baseColumnNames="book_id"

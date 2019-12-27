@@ -32,6 +32,6 @@ public class Book {
 
     private Integer price;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<WarehouseBook> warehouseBook;
 }

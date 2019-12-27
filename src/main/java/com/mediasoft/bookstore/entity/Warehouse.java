@@ -16,6 +16,10 @@ public class Warehouse {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="common_seq")
     private Long id;
 
-    @OneToMany
-    private List<WarehouseBook> warehouseBook;
+    private String phone;
+
+    private String address;
+
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    private List<WarehouseBook> warehouseBooks;
 }

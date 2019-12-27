@@ -20,6 +20,6 @@ public class ShoppingBasket {
     @JoinColumn
     private Customer customer;
 
-    @OneToMany
-    private List<ShoppingBasketBook> shoppingBasketBook;
+    @OneToMany(mappedBy = "shoppingBasket", cascade = CascadeType.ALL)
+    private List<ShoppingBasketBook> shoppingBasketBooks;
 }

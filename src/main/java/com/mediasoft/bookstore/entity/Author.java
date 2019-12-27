@@ -22,8 +22,6 @@ public class Author {
 
     private String email;
 
-    @OneToMany
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL) //TODO настроить удаления в сущностях
     private List<Book> books;
 }
-
-

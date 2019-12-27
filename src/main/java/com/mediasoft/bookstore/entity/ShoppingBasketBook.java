@@ -19,7 +19,7 @@ public class ShoppingBasketBook {
     @JoinColumn
     private ShoppingBasket shoppingBasket;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn
     private Book book;
 

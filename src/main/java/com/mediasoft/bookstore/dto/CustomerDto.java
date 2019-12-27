@@ -1,7 +1,7 @@
 package com.mediasoft.bookstore.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,8 +12,9 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor(onConstructor = @__({@JsonCreator}))
-public class CustomerDto {
+public final class CustomerDto {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private final Long id;
 
     @NotNull
@@ -33,5 +34,6 @@ public class CustomerDto {
             message = "Адрес должен состоять из русских букв и содеражать от 4 до 32 символов.")
     private final String address;
 
+    @JsonProperty(value = "shoppingBaskets",access = JsonProperty.Access.READ_ONLY)
     private final List<ShoppingBasketDto> shoppingBasketDtos;
 }

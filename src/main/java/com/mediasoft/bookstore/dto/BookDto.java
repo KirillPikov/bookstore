@@ -1,18 +1,20 @@
 package com.mediasoft.bookstore.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Getter
 @RequiredArgsConstructor(onConstructor = @__({@JsonCreator}))
-public class BookDto {
+public final class BookDto {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private final Long id;
 
     @NotNull
@@ -22,14 +24,16 @@ public class BookDto {
     private final String isbn;
 
     @NotNull
+    @JsonProperty(value = "publisher")
     private final PublisherDto publisherDto;
 
     @NotNull
+    @JsonProperty(value = "author")
     private final AuthorDto authorDto;
 
     @NotNull
-    @Size(max = 2020, message = "Год написания книги должен быть в пределах" +
-            " от рождества Христова до сегодняшних дней.")
+    @Range(max = 2020, message = "Год написания книги должен находиться в пределах" +
+                                 " от рождества Христова до сегодняшних дней.")
     private final Integer year;
 
     @NotNull
@@ -38,8 +42,9 @@ public class BookDto {
     private final String title;
 
     @NotNull
-    @Size(message = "Значение не может быть отрицательным или бесконечным.")
+    @Range(max = 1000000000 /* 1 миллиард */, message = "Значение не может быть отрицательным или бесконечным.")
     private final Integer price;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private final Set<Long> warehouseBooksId;
 }

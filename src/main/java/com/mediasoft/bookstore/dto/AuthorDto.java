@@ -1,18 +1,19 @@
 package com.mediasoft.bookstore.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
 
 @Getter
 @RequiredArgsConstructor(onConstructor = @__({@JsonCreator}))
-public class AuthorDto {
+public final class AuthorDto {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private final Long id;
 
     @NotNull
@@ -28,6 +29,4 @@ public class AuthorDto {
     @Email(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$",
             message = "Введёная строка не является e-mail.")
     private final String email;
-
-    private final Set<Long> booksId;
 }

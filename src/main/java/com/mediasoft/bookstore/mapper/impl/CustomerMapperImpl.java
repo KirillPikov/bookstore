@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -29,9 +30,11 @@ public class CustomerMapperImpl implements CustomerMapper {
             customer.setPhone(customerDto.getPhone());
             customer.setAddress(customerDto.getAddress());
             customer.setShoppingBaskets(
+                    Objects.nonNull(customerDto.getShoppingBasketDtos()) ?
                     customerDto.getShoppingBasketDtos().stream()
                             .map(shoppingBasketMapper::toEntity)
                             .collect(Collectors.toList())
+                    : null
             );
         }
         return customer;
@@ -49,9 +52,11 @@ public class CustomerMapperImpl implements CustomerMapper {
                     customer.getName(),
                     customer.getPhone(),
                     customer.getAddress(),
+                    Objects.nonNull(customer.getShoppingBaskets()) ?
                     customer.getShoppingBaskets().stream()
                             .map(shoppingBasketMapper::toDto)
                             .collect(Collectors.toList())
+                    : null
             );
         }
         return customerDto;

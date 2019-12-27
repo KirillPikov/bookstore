@@ -34,6 +34,7 @@ public class BookMapperImpl implements BookMapper {
             book.setId(bookDto.getId());
             book.setIsbn(bookDto.getIsbn());
             book.setPublisher(
+                    /* Конвертирование Dto в Entity */
                     publisherMapper.toEntity(
                             bookDto.getPublisherDto()
                     )
@@ -46,11 +47,6 @@ public class BookMapperImpl implements BookMapper {
             book.setYear(bookDto.getYear());
             book.setTitle(bookDto.getTitle());
             book.setPrice(bookDto.getPrice());
-            book.setWarehouseBook(
-                    (LinkedList<WarehouseBook>) warehouseBookRepository.findAllById(
-                            bookDto.getWarehouseBooksId()
-                    )
-            );
         }
         return book;
     }

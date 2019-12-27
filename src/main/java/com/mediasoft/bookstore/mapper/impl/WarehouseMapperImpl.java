@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,11 +25,8 @@ public class WarehouseMapperImpl implements WarehouseMapper {
         } else {
             warehouse = new Warehouse();
             warehouse.setId(warehouseDto.getId());
-            warehouse.setWarehouseBook(
-                    warehouseDto.getWarehouseBookDtos().stream()
-                            .map(warehouseBookMapper::toEntity)
-                            .collect(Collectors.toList())
-            );
+            warehouse.setPhone(warehouseDto.getPhone());
+            warehouse.setAddress(warehouseDto.getAddress());
         }
         return warehouse;
     }
@@ -41,9 +39,13 @@ public class WarehouseMapperImpl implements WarehouseMapper {
         } else {
             warehouseDto = new WarehouseDto(
                     warehouse.getId(),
-                    warehouse.getWarehouseBook().stream()
+                    warehouse.getPhone(),
+                    warehouse.getAddress(),
+                    Objects.nonNull(warehouse.getWarehouseBooks()) ?
+                    warehouse.getWarehouseBooks().stream()
                             .map(warehouseBookMapper::toDto)
                             .collect(Collectors.toList())
+                    : null
             );
         }
         return warehouseDto;

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,17 +27,12 @@ public class ShoppingBasketMapperImpl implements ShoppingBasketMapper {
             shoppingBasket = null;
         } else {
             shoppingBasket = new ShoppingBasket();
-            shoppingBasket.setId(shoppingBasketDto.getId());
-            shoppingBasket.setCustomer(
-                    customerRepository.findById(
-                            shoppingBasketDto.getCustomerId()
-                    )
-                    .orElse(null) //TODO Тут хуйня
-            );
-            shoppingBasket.setShoppingBasketBook(
+            shoppingBasket.setShoppingBasketBooks(
+                    Objects.nonNull(shoppingBasket.getShoppingBasketBooks()) ?
                     shoppingBasketDto.getShoppingBasketBookDtos().stream()
                             .map(shoppingBasketBookMapper::toEntity)
                             .collect(Collectors.toList())
+                    : null
             );
         }
         return shoppingBasket;
@@ -51,9 +47,11 @@ public class ShoppingBasketMapperImpl implements ShoppingBasketMapper {
             shoppingBasketDto = new ShoppingBasketDto(
                     shoppingBasket.getId(),
                     shoppingBasket.getCustomer().getId(),
-                    shoppingBasket.getShoppingBasketBook().stream()
+                    Objects.nonNull(shoppingBasket.getShoppingBasketBooks()) ?
+                    shoppingBasket.getShoppingBasketBooks().stream()
                             .map(shoppingBasketBookMapper::toDto)
                             .collect(Collectors.toList())
+                    : null
             );
         }
         return shoppingBasketDto;

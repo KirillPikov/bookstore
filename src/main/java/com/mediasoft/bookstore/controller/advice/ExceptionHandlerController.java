@@ -1,9 +1,12 @@
 package com.mediasoft.bookstore.controller.advice;
 
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
+import com.mediasoft.bookstore.exception.ShoppingBasketReleaseException;
+import com.mediasoft.bookstore.exception.ShoppingBasketUpdateException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,7 +16,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ExceptionHandlerController {
-    //TODO все сообщения в формат JSON!
+
     @ResponseBody
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> entityNotFoundException(EntityNotFoundException enfe)
@@ -32,7 +35,28 @@ public class ExceptionHandlerController {
                 HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-/*    @ResponseBody
+    @ResponseBody
+    @ExceptionHandler(ShoppingBasketReleaseException.class)
+    public ResponseEntity<String> shoppingBasketReleaseException(ShoppingBasketReleaseException sbre)
+            throws ShoppingBasketReleaseException {
+        return new ResponseEntity<>("Ошибка назначения корзине статуса ORDERED.. " + sbre.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(ShoppingBasketUpdateException.class)
+    public ResponseEntity<String> shoppingBasketUpdateException(ShoppingBasketUpdateException sbue)
+            throws ShoppingBasketUpdateException {
+        return new ResponseEntity<>("Ошибка обновления состояния корзины.. " + sbue.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> httpMessageNotReadableException(HttpMessageNotReadableException hmnre)
+            throws HttpMessageNotReadableException {
+        return new ResponseEntity<>("Ошибка разбора запроса.. " + hmnre.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+/*
+    @ResponseBody
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> otherException(Exception e)
             throws Exception {

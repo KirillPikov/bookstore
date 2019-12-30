@@ -7,5 +7,6 @@
     <include file="table_creation.xml"              relativeToChangelogFile="true"/>
     <include file="sequence_creation.xml"           relativeToChangelogFile="true"/>
     <include file="drop-create_constraints.xml"     relativeToChangelogFile="true"/>
+    <include file="create_basket_status_enum.xml"   relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

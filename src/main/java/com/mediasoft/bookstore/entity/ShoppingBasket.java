@@ -1,5 +1,6 @@
 package com.mediasoft.bookstore.entity;
 
+import com.mediasoft.bookstore.entity.enums.ShoppingBasketStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,10 @@ public class ShoppingBasket {
     @JoinColumn
     private Customer customer;
 
-    @OneToMany(mappedBy = "shoppingBasket", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "shoppingBasket", cascade = CascadeType.REMOVE)
     private List<ShoppingBasketBook> shoppingBasketBooks;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private ShoppingBasketStatus shoppingBasketStatus;
 }

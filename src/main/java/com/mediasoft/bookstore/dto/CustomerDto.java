@@ -17,7 +17,7 @@ public final class CustomerDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private final Long id;
 
-    @NotNull
+    @NotNull(message = "Поле email должно быть задано.")
     @Email(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$",
             message = "Введёная строка не является e-mail.")
     private final String email;

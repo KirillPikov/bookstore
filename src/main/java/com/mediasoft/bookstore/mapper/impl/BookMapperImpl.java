@@ -2,7 +2,6 @@ package com.mediasoft.bookstore.mapper.impl;
 
 import com.mediasoft.bookstore.dto.BookDto;
 import com.mediasoft.bookstore.entity.Book;
-import com.mediasoft.bookstore.entity.WarehouseBook;
 import com.mediasoft.bookstore.mapper.AuthorMapper;
 import com.mediasoft.bookstore.mapper.BookMapper;
 import com.mediasoft.bookstore.mapper.PublisherMapper;
@@ -10,9 +9,6 @@ import com.mediasoft.bookstore.repository.WarehouseBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
@@ -40,6 +36,7 @@ public class BookMapperImpl implements BookMapper {
                     )
             );
             book.setAuthor(
+                    /* Конвертирование Dto в Entity */
                     authorMapper.toEntity(
                             bookDto.getAuthorDto()
                     )
@@ -64,10 +61,7 @@ public class BookMapperImpl implements BookMapper {
                     authorMapper.toDto(book.getAuthor()),
                     book.getYear(),
                     book.getTitle(),
-                    book.getPrice(),
-                    book.getWarehouseBook().stream()
-                            .map(WarehouseBook::getId)
-                            .collect(Collectors.toSet())
+                    book.getPrice()
             );
         }
         return bookDto;

@@ -4,7 +4,6 @@ import com.mediasoft.bookstore.dto.ShoppingBasketDto;
 import com.mediasoft.bookstore.entity.ShoppingBasket;
 import com.mediasoft.bookstore.mapper.ShoppingBasketBookMapper;
 import com.mediasoft.bookstore.mapper.ShoppingBasketMapper;
-import com.mediasoft.bookstore.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class ShoppingBasketMapperImpl implements ShoppingBasketMapper {
-
-    private  final CustomerRepository customerRepository;
 
     private final ShoppingBasketBookMapper shoppingBasketBookMapper;
 
@@ -33,6 +30,9 @@ public class ShoppingBasketMapperImpl implements ShoppingBasketMapper {
                             .map(shoppingBasketBookMapper::toEntity)
                             .collect(Collectors.toList())
                     : null
+            );
+            shoppingBasket.setShoppingBasketStatus(
+                    shoppingBasketDto.getShoppingBasketStatus()
             );
         }
         return shoppingBasket;
@@ -51,7 +51,8 @@ public class ShoppingBasketMapperImpl implements ShoppingBasketMapper {
                     shoppingBasket.getShoppingBasketBooks().stream()
                             .map(shoppingBasketBookMapper::toDto)
                             .collect(Collectors.toList())
-                    : null
+                    : null,
+                    shoppingBasket.getShoppingBasketStatus()
             );
         }
         return shoppingBasketDto;

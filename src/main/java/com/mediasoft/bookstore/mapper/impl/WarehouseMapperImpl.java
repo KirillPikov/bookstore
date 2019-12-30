@@ -8,9 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 @Component
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class WarehouseMapperImpl implements WarehouseMapper {
@@ -40,12 +37,7 @@ public class WarehouseMapperImpl implements WarehouseMapper {
             warehouseDto = new WarehouseDto(
                     warehouse.getId(),
                     warehouse.getPhone(),
-                    warehouse.getAddress(),
-                    Objects.nonNull(warehouse.getWarehouseBooks()) ?
-                    warehouse.getWarehouseBooks().stream()
-                            .map(warehouseBookMapper::toDto)
-                            .collect(Collectors.toList())
-                    : null
+                    warehouse.getAddress()
             );
         }
         return warehouseDto;

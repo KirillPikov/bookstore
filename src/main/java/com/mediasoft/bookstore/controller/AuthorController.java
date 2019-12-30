@@ -75,7 +75,7 @@ public class AuthorController {
             @RequestParam(name = PathSettings.COUNT_REQUEST_PARAM, required = false, defaultValue = PaginationSettings.DEFAULT_ELEMENTS_COUNT) Integer count,
             @RequestParam(name = PathSettings.SORTING_FIELD_REQUEST_PARAM, required = false, defaultValue = PaginationSettings.DEFAULT_SORTING_FIELD) String sortingField,
             @RequestParam(name = PathSettings.SORTING_REQUEST_PARAM, required = false, defaultValue = PaginationSettings.DEFAULT_SORTING) String sorting
-    ) {
+    ) throws EntityNotFoundException {
         Sort sort;
         if(sorting.equals("ASC")) {
             sort = Sort.by(sortingField).ascending();

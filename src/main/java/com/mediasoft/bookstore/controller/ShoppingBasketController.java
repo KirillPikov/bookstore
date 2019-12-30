@@ -5,6 +5,8 @@ import com.mediasoft.bookstore.config.PathSettings;
 import com.mediasoft.bookstore.dto.ShoppingBasketDto;
 import com.mediasoft.bookstore.entity.ShoppingBasket;
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
+import com.mediasoft.bookstore.exception.ShoppingBasketReleaseException;
+import com.mediasoft.bookstore.exception.ShoppingBasketUpdateException;
 import com.mediasoft.bookstore.mapper.ShoppingBasketMapper;
 import com.mediasoft.bookstore.service.ShoppingBasketService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class ShoppingBasketController {
     private final ShoppingBasketMapper shoppingBasketMapper;
 
     @GetMapping
-    public ResponseEntity<List<ShoppingBasketDto>> getShoppingBasketPage(
+    public ResponseEntity<List<ShoppingBasketDto>> getShoppingBasketId(
             @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
             @RequestParam(name = PathSettings.PAGE_REQUEST_PARAM, required = false, defaultValue = PaginationSettings.DEFAULT_PAGE) Integer page,
             @RequestParam(name = PathSettings.COUNT_REQUEST_PARAM, required = false, defaultValue = PaginationSettings.DEFAULT_ELEMENTS_COUNT) Integer count,
@@ -54,10 +56,10 @@ public class ShoppingBasketController {
         return new ResponseEntity<>(shoppingBasketDtos, HttpStatus.OK);
     }
 
-    @GetMapping("/{" + PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME + "}")
+    @GetMapping("/{" + PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME + "}")
     public ResponseEntity<ShoppingBasketDto> getShoppingBasket(
             @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
-            @PathVariable(name = PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME) Integer shoppingBasketNum
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketNum
     ) {
         /* Конвертирование в Dto */
         ShoppingBasketDto shoppingBasketDto = shoppingBasketMapper.toDto(
@@ -79,13 +81,25 @@ public class ShoppingBasketController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{" + PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME + "}")
+    @PutMapping(value = "/{" + PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME + "}", consumes = "application/json")
+    public ResponseEntity updateShoppingBasket(
+            @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketNum,
+            @RequestBody @Valid ShoppingBasketDto shoppingBasketDto
+    ) throws EntityNotFoundException, ShoppingBasketUpdateException, ShoppingBasketReleaseException {
+        /* Конвертирование в формат Entity */
+        ShoppingBasket shoppingBasket = shoppingBasketMapper.toEntity(shoppingBasketDto);
+        /* Обновление корзины с помощью сервиса */
+        shoppingBasketService.updateShoppingBasket(customerId, shoppingBasketNum, shoppingBasket);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{" + PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME + "}")
     public ResponseEntity deleteShoppingBasket(
             @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
-            @PathVariable(name = PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME) Integer shoppingBasketPage
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketId
     ) throws EntityNotFoundException {
-
-        shoppingBasketService.deleteShoppingBasket(customerId, shoppingBasketPage);
+        shoppingBasketService.deleteShoppingBasket(customerId, shoppingBasketId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

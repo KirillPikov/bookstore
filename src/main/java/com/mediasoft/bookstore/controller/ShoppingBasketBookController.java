@@ -27,15 +27,11 @@ public class ShoppingBasketBookController {
 
     @GetMapping
     public ResponseEntity<List<ShoppingBasketBookDto>> getShoppingBasketBookPage(
-            @PathVariable(
-                    name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME
-            ) Long customerId,
-            @PathVariable(
-                    name = PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME
-            ) Integer shoppingBasketNum
+            @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketId
     ) throws EntityNotFoundException {
         /* Получаем из сервиса все позиции находящиеся в данной корзине */
-        List<ShoppingBasketBookDto> shoppingBasketBookDtos = shoppingBasketBookService.getShoppingBasketBookPage(customerId, shoppingBasketNum)
+        List<ShoppingBasketBookDto> shoppingBasketBookDtos = shoppingBasketBookService.getShoppingBasketBookPage(customerId, shoppingBasketId)
                 .stream()
                 /* Конвертирование каждой сущности в Dto */
                 .map(shoppingBasketBookMapper::toDto)
@@ -44,16 +40,16 @@ public class ShoppingBasketBookController {
         return new ResponseEntity<>(shoppingBasketBookDtos, HttpStatus.OK);
     }
 
-    @GetMapping("/{" + PathSettings.SHOPPING_BASKET_BOOK_NUM_PATH_VAR_NAME + "}")
+    @GetMapping("/{" + PathSettings.SHOPPING_BASKET_BOOK_ID_PATH_VAR_NAME + "}")
     public ResponseEntity<ShoppingBasketBookDto> getShoppingBasketListByCustomerId(
             @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
-            @PathVariable(name = PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME) Integer shoppingBasketNum,
-            @PathVariable(name = PathSettings.SHOPPING_BASKET_BOOK_NUM_PATH_VAR_NAME) Integer shoppingBasketBookNum) {
-
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketId,
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_BOOK_ID_PATH_VAR_NAME) Long shoppingBasketBookId
+    ) {
         /* Конвертирование в Dto */
         ShoppingBasketBookDto shoppingBasketBookDto = shoppingBasketBookMapper.toDto(
                 /* Получаем из сервиса данную позицию в данной корзине */
-                shoppingBasketBookService.getShoppingBasketBook(customerId, shoppingBasketNum, shoppingBasketBookNum)
+                shoppingBasketBookService.getShoppingBasketBook(customerId, shoppingBasketId, shoppingBasketBookId)
         );
         return new ResponseEntity<>(shoppingBasketBookDto, HttpStatus.OK);
     }
@@ -61,25 +57,38 @@ public class ShoppingBasketBookController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity addShoppingBasket(
             @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
-            @PathVariable(name = PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME) Integer shoppingBasketNum,
-            @RequestBody @Valid ShoppingBasketBookDto shoppingBasketBookDto) {
-
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketId,
+            @RequestBody @Valid ShoppingBasketBookDto shoppingBasketBookDto
+    ) {
         /* Получение данной корзины с помощью сервиса */
         ShoppingBasketBook shoppingBasketBook = shoppingBasketBookMapper.toEntity(shoppingBasketBookDto);
         /* Добавление новой позиции в данную корзину */
-        shoppingBasketBookService.addShoppingBasketBook(customerId, shoppingBasketNum, shoppingBasketBook);
+        shoppingBasketBookService.addShoppingBasketBook(customerId, shoppingBasketId, shoppingBasketBook);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{" + PathSettings.SHOPPING_BASKET_BOOK_NUM_PATH_VAR_NAME + "}")
+    @PutMapping(value = "/{" + PathSettings.SHOPPING_BASKET_BOOK_ID_PATH_VAR_NAME + "}", consumes = "application/json")
+    public ResponseEntity updateShoppingBasketBook(
+            @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketId,
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_BOOK_ID_PATH_VAR_NAME) Long shoppingBasketBookId,
+            @RequestBody @Valid ShoppingBasketBookDto shoppingBasketBookDto
+    ) throws EntityNotFoundException {
+        /* Конвертирование в формат Entity */
+        ShoppingBasketBook shoppingBasketBook = shoppingBasketBookMapper.toEntity(shoppingBasketBookDto);
+        /* Обновление позиции с помощью сервиса */
+        shoppingBasketBookService.updateShoppingBasketBook(customerId, shoppingBasketId, shoppingBasketBookId, shoppingBasketBook);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{" + PathSettings.SHOPPING_BASKET_BOOK_ID_PATH_VAR_NAME + "}")
     public ResponseEntity deleteShoppingBasket(
             @PathVariable(name = PathSettings.CUSTOMER_ID_PATH_VAR_NAME) Long customerId,
-            @PathVariable(name = PathSettings.SHOPPING_BASKET_NUM_PATH_VAR_NAME) Integer shoppingBasketNum,
-            @PathVariable(name = PathSettings.SHOPPING_BASKET_BOOK_NUM_PATH_VAR_NAME) Integer shoppingBasketBooknum)
-            throws EntityNotFoundException {
-
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_ID_PATH_VAR_NAME) Long shoppingBasketId,
+            @PathVariable(name = PathSettings.SHOPPING_BASKET_BOOK_ID_PATH_VAR_NAME) Long shoppingBasketBookNum
+    ) throws EntityNotFoundException {
         /* Удаление данной позиции из корзины */
-        shoppingBasketBookService.deleteShoppingBasketBook(customerId, shoppingBasketNum, shoppingBasketBooknum);
+        shoppingBasketBookService.deleteShoppingBasketBook(customerId, shoppingBasketId, shoppingBasketBookNum);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

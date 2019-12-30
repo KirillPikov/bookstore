@@ -3,6 +3,7 @@ package com.mediasoft.bookstore.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mediasoft.bookstore.entity.enums.ShoppingBasketStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -20,4 +21,7 @@ public final class ShoppingBasketDto {
 
     @JsonProperty(value = "shoppingBasketBooks", access = JsonProperty.Access.READ_ONLY)
     private final List<ShoppingBasketBookDto> shoppingBasketBookDtos;
+
+    @JsonProperty(value = "status")
+    private final ShoppingBasketStatus shoppingBasketStatus;
 }

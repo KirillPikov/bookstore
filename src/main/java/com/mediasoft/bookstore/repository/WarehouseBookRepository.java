@@ -38,10 +38,26 @@ public interface WarehouseBookRepository extends JpaRepository<WarehouseBook, Lo
 
     /**
      * Находит позицию на складе, на котором хранится данная книга в количестве больше или равно.
-     * @param bookId
-     * @param count
+     * @param bookId ID книги.
+     * @param count необходимое количество книг.
      * @return
      */
     @Transactional(propagation = Propagation.REQUIRED)
     Optional<WarehouseBook> findByBook_IdAndCountGreaterThanEqual(Long bookId, Integer count);
+
+    /**
+     * Проверка существования позиции на данном складе с данной книгой.
+     * @param warehouseId ID склада.
+     * @param bookId ID книги.
+     * @return
+     */
+    Boolean existsByWarehouse_IdAndBook_Id(Long warehouseId, Long bookId);
+
+    /**
+     * Получение позиции на данном складе с данной книгой.
+     * @param warehouseId ID склада.
+     * @param bookId ID книги.
+     * @return
+     */
+    Optional<WarehouseBook> findByWarehouse_IdAndBook_Id(Long warehouseId, Long bookId);
 }

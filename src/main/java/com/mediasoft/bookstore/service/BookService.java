@@ -1,6 +1,7 @@
 package com.mediasoft.bookstore.service;
 
 import com.mediasoft.bookstore.entity.Book;
+import com.mediasoft.bookstore.exception.EntityNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,19 @@ public interface BookService {
     Book getBookById(Long bookId);
 
     /**
+     * Получение страницы всех книг.
+     * @param pageable настройка страницы.
+     * @return
+     */
+    List<Book> getAllBooks(Pageable pageable);
+
+    /**
      * Получение всех книг автора по его ID.
      * @param authorId ID автора.
      * @param pageable настройка страницы.
      * @return
      */
-    List<Book> getAllBooksByAuthorId(Long authorId, Pageable pageable);
+    List<Book> getAllBooksByAuthorId(Long authorId, Pageable pageable) throws EntityNotFoundException;
 
     /**
      * Получение всех книг издателя по его ID.
@@ -29,7 +37,7 @@ public interface BookService {
      * @param pageable настройка страницы.
      * @return
      */
-    List<Book> getAllBooksByPublisherId(Long publisherId, Pageable pageable);
+    List<Book> getAllBooksByPublisherId(Long publisherId, Pageable pageable) throws EntityNotFoundException;
 
     /**
      * Добавление новой книги.

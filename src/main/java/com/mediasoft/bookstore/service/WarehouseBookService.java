@@ -9,13 +9,6 @@ import java.util.List;
 @Service
 public interface WarehouseBookService {
     /**
-     * Получение страницы позиций всех складов.
-     * @param pageable настройки страницы.
-     * @return все позиции конкретного склада.
-     */
-    List<WarehouseBook> getWarehouseBooksPageByWarehouseId(Pageable pageable);
-
-    /**
      * Получение страницы позиций конкретного склада.
      * @param warehouseId ID склада.
      * @param pageable настройки страницы.

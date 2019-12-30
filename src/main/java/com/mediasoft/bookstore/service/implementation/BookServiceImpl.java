@@ -1,8 +1,11 @@
 package com.mediasoft.bookstore.service.implementation;
 
 import com.mediasoft.bookstore.entity.Book;
+import com.mediasoft.bookstore.entity.Publisher;
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
+import com.mediasoft.bookstore.repository.AuthorRepository;
 import com.mediasoft.bookstore.repository.BookRepository;
+import com.mediasoft.bookstore.repository.PublisherRepository;
 import com.mediasoft.bookstore.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +13,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+
+    private final AuthorRepository authorRepository;
+
+    private final PublisherRepository publisherRepository;
 
     /**
      * Получение книги по ID.
@@ -34,6 +42,19 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
+     * Получение страницы всех книг.
+     *
+     * @param pageable настройка страницы.
+     * @return
+     */
+    @Override
+    public List<Book> getAllBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable)
+                .stream()
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Получение всех книг автора по его ID.
      *
      * @param authorId ID автора.
@@ -41,8 +62,12 @@ public class BookServiceImpl implements BookService {
      * @return
      */
     @Override
-    public List<Book> getAllBooksByAuthorId(Long authorId, Pageable pageable) {
-        return bookRepository.getAllByAuthor_Id(authorId, pageable);
+    public List<Book> getAllBooksByAuthorId(Long authorId, Pageable pageable) throws EntityNotFoundException {
+        if(authorRepository.existsById(authorId)) {
+            return bookRepository.getAllByAuthor_Id(authorId, pageable);
+        } else {
+            throw new EntityNotFoundException("Author with id = " + authorId + " - not found.");
+        }
     }
 
     /**
@@ -53,8 +78,12 @@ public class BookServiceImpl implements BookService {
      * @return
      */
     @Override
-    public List<Book> getAllBooksByPublisherId(Long publisherId, Pageable pageable) {
-        return bookRepository.getAllByPublisher_Id(publisherId, pageable);
+    public List<Book> getAllBooksByPublisherId(Long publisherId, Pageable pageable) throws EntityNotFoundException {
+        if(publisherRepository.existsById(publisherId)) {
+            return bookRepository.getAllByPublisher_Id(publisherId, pageable);
+        } else {
+            throw new EntityNotFoundException("Publisher with id = " + publisherId + " - not found.");
+        }
     }
 
     /**

@@ -6,9 +6,11 @@ import com.mediasoft.bookstore.repository.WarehouseRepository;
 import com.mediasoft.bookstore.service.WarehouseService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
@@ -36,13 +38,16 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     /**
-     * Получние списка всех складов.
+     * Получние страницы всех складов.
      *
-     * @return список всех складов
+     * @param pageable настройки страницы.
+     * @return
      */
     @Override
-    public List<Warehouse> getAllWarehouses() {
-        return warehouseRepository.findAll();
+    public List<Warehouse> getAllWarehousesPage(Pageable pageable) {
+        return warehouseRepository.findAll(pageable)
+                .stream()
+                .collect(Collectors.toList());
     }
 
     /**

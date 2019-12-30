@@ -2,6 +2,7 @@ package com.mediasoft.bookstore.service;
 
 import com.mediasoft.bookstore.entity.ShoppingBasket;
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
+import com.mediasoft.bookstore.exception.ShoppingBasketUpdateException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,13 @@ import java.util.List;
 @Service
 public interface ShoppingBasketService {
     /**
-     * Получение конкретной корзины по её номеру и ID покупателя.
+     * Получение конкретной корзины по её ID и ID покупателя.
      * @param customerId ID покупателя.
-     * @param shoppingBasketNum номер корзины.
+     * @param shoppingBasketId ID корзины.
      * @return конкретную корзину покупателя.
      * @throws EntityNotFoundException
      */
-    ShoppingBasket getShoppingBasket(Long customerId, Integer shoppingBasketNum) throws EntityNotFoundException;
+    ShoppingBasket getShoppingBasket(Long customerId, Long shoppingBasketId) throws EntityNotFoundException;
 
     /**
      * Получение всех корзин покупателя постранично.
@@ -35,10 +36,19 @@ public interface ShoppingBasketService {
     void addShoppingBasket(Long customerId, ShoppingBasket shoppingBasket);
 
     /**
-     * Удаление конкретной корзины покупателя по её номеру.
+     * Изменение состояния корзины покупателя.
      * @param customerId ID покупателя.
-     * @param shoppingBasketNum номер корзины покупателя.
+     * @param shoppingBasketId ID корзины.
+     * @param shoppingBasket корзина с новым состоянием.
+     * @throws ShoppingBasketUpdateException возникает при смене статуса корзины, причём её текущий (старый) отличен от ACTIVE
+     */
+    void updateShoppingBasket(Long customerId, Long shoppingBasketId, ShoppingBasket shoppingBasket) throws EntityNotFoundException, ShoppingBasketUpdateException;
+
+    /**
+     * Удаление конкретной корзины покупателя по её IDу.
+     * @param customerId ID покупателя.
+     * @param shoppingBasketId ID корзины покупателя.
      * @throws EntityNotFoundException
      */
-    void deleteShoppingBasket(Long customerId, Integer shoppingBasketNum) throws EntityNotFoundException;
+    void deleteShoppingBasket(Long customerId, Long shoppingBasketId) throws EntityNotFoundException;
 }

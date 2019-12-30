@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
@@ -20,19 +19,6 @@ public class WarehouseBookServiceImpl implements WarehouseBookService {
     private final WarehouseBookRepository warehouseBookRepository;
 
     private final WarehouseService warehouseService;
-
-    /**
-     * Получение страницы позиций всех складов.
-     *
-     * @param pageable настройки страницы.
-     * @return все позиции конкретного склада.
-     */
-    @Override
-    public List<WarehouseBook> getWarehouseBooksPageByWarehouseId(Pageable pageable) {
-        return warehouseBookRepository.findAll(pageable)
-                .stream()
-                .collect(Collectors.toList());
-    }
 
     /**
      * Получение страницы позиций конкретного склада.
@@ -58,7 +44,16 @@ public class WarehouseBookServiceImpl implements WarehouseBookService {
         warehouseBook.setWarehouse(
                 warehouseService.getWarehouse(warehouseId)
         );
-        warehouseBookRepository.save(warehouseBook);
+        if(warehouseBookRepository.existsByWarehouse_IdAndBook_Id(warehouseId, warehouseBook.getBook().getId())) {
+            warehouseBookRepository.findByWarehouse_IdAndBook_Id(
+                    warehouseId,
+                    warehouseBook.getBook().getId()
+            ).ifPresent(warehouseBookRepo -> {
+                this.updateWarehouseBook(warehouseId, warehouseBookRepo.getId(), warehouseBook);
+            });
+        } else {
+            warehouseBookRepository.save(warehouseBook);
+        }
     }
 
     /**

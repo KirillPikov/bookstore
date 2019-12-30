@@ -22,6 +22,6 @@ public class Author {
 
     private String email;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL) //TODO настроить удаления в сущностях
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<Book> books;
 }

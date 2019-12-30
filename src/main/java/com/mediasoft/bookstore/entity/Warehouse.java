@@ -20,6 +20,6 @@ public class Warehouse {
 
     private String address;
 
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.REMOVE)
     private List<WarehouseBook> warehouseBooks;
 }

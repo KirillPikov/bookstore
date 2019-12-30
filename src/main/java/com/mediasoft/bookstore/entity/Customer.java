@@ -24,6 +24,6 @@ public class Customer {
 
     private String address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private List<ShoppingBasket> shoppingBaskets;
 }

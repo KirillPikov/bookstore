@@ -28,10 +28,12 @@ import java.util.stream.Collectors;
 @RequestMapping(PathSettings.AUTHOR_CONTROLLER_PATH)
 public class AuthorController {
 
+    //-------------------------< Services >-------------------------//
     private final AuthorService authorService;
 
     private final BookService bookService;
 
+    //-------------------------< Mappers >--------------------------//
     private final AuthorMapper authorMapper;
 
     private final BookMapper bookMapper;

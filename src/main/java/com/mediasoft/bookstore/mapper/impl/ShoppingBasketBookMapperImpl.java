@@ -29,7 +29,7 @@ public class ShoppingBasketBookMapperImpl implements ShoppingBasketBookMapper {
             shoppingBasketBook.setShoppingBasket(
                     shoppingBasketRepository.findById(
                             shoppingBasketBookDto.getShoppingBasketId()
-                    ).orElse(null)  //TODO мб тут в сервисе получать, где будет обработка ошибок
+                    ).orElse(null)
             );
             shoppingBasketBook.setBook(
                     bookMapper.toEntity(

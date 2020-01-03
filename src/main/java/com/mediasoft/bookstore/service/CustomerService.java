@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomerService {
+
     /**
      * Получение поткупателя по ID.
      * @param customerId ID покупаетля, которого хотим получить.

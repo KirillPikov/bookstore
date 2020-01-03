@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public interface BookService {
+
     /**
      * Получение книги по ID.
      * @param bookId ID книги.

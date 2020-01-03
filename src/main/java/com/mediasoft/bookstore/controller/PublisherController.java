@@ -6,7 +6,6 @@ import com.mediasoft.bookstore.dto.BookDto;
 import com.mediasoft.bookstore.dto.PublisherDto;
 import com.mediasoft.bookstore.entity.Publisher;
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
-import com.mediasoft.bookstore.mapper.AuthorMapper;
 import com.mediasoft.bookstore.mapper.BookMapper;
 import com.mediasoft.bookstore.mapper.PublisherMapper;
 import com.mediasoft.bookstore.service.BookService;
@@ -29,10 +28,12 @@ import java.util.stream.Collectors;
 @RequestMapping(PathSettings.PUBLISHER_CONTROLLER_PATH)
 public class PublisherController {
 
+    //-------------------------< Services >-------------------------//
     private final PublisherService publisherService;
 
     private final BookService bookService;
 
+    //-------------------------< Mappers >--------------------------//
     private final PublisherMapper publisherMapper;
 
     private final BookMapper bookMapper;

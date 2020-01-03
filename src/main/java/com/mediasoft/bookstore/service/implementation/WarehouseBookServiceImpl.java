@@ -41,6 +41,9 @@ public class WarehouseBookServiceImpl implements WarehouseBookService {
      */
     @Override
     public void addWarehouseBook(Long warehouseId, WarehouseBook warehouseBook) {
+        /* При добавлении новой позиции осуществляется проверка на существование
+         на данном складе данной книги в каком-либо количестве данной книги, если есть такая позиция,
+         то мы обновляем количество книг на этом складе в этой позиции, иначе добавляем новую. */
         warehouseBook.setWarehouse(
                 warehouseService.getWarehouse(warehouseId)
         );
@@ -67,7 +70,7 @@ public class WarehouseBookServiceImpl implements WarehouseBookService {
     public void updateWarehouseBook(Long warehouseId, Long warehouseBookId, WarehouseBook warehouseBook) {
         /* Выставляю ID позиции, так как изначальное он не проинициализирован. */
         warehouseBook.setId(warehouseBookId);
-        /* Пробуем найти покупателя по переданному ID позиции и ID склада */
+        /* Пробуем найти позицию по переданному ID позиции и ID склада */
         warehouseBookRepository.findByIdAndWarehouse_Id(warehouseBookId, warehouseId)
                 /* Если получилось найти, меняем её состояние и сохраняем */
                 .ifPresentOrElse(

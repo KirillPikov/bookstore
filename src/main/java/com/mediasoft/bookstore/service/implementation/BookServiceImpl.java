@@ -1,7 +1,6 @@
 package com.mediasoft.bookstore.service.implementation;
 
 import com.mediasoft.bookstore.entity.Book;
-import com.mediasoft.bookstore.entity.Publisher;
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
 import com.mediasoft.bookstore.repository.AuthorRepository;
 import com.mediasoft.bookstore.repository.BookRepository;

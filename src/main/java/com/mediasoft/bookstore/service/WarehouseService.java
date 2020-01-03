@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public interface WarehouseService {
+
     /**
      * Получение склада по ID.
      * @param warehouseId ID покупаетля, которого хотим получить.

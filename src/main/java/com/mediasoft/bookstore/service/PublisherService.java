@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface PublisherService {
+
     /**
      * Получение издателя по его ID.
      * @param publisherId ID издателя, которого хотим получить.

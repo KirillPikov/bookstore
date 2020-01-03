@@ -4,9 +4,7 @@ import com.mediasoft.bookstore.config.PathSettings;
 import com.mediasoft.bookstore.dto.WarehouseDto;
 import com.mediasoft.bookstore.entity.Warehouse;
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
-import com.mediasoft.bookstore.mapper.WarehouseBookMapper;
 import com.mediasoft.bookstore.mapper.WarehouseMapper;
-import com.mediasoft.bookstore.service.WarehouseBookService;
 import com.mediasoft.bookstore.service.WarehouseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +19,9 @@ import javax.validation.Valid;
 @RequestMapping(PathSettings.WAREHOUSE_CONTROLLER_PATH)
 public class WarehouseController {
 
-    //-------------------------< Services >-------------------------//
     private final WarehouseService warehouseService;
 
-    private final WarehouseBookService warehouseBookService;
-
-    //-------------------------< Mappers >--------------------------//
     private final WarehouseMapper warehouseMapper;
-
-    private final WarehouseBookMapper warehouseBookMapper;
 
     @GetMapping("/{" + PathSettings.WAREHOUSE_ID_PATH_VAR_NAME + "}")
     public ResponseEntity<WarehouseDto> getWarehouseById(@PathVariable(name = PathSettings.WAREHOUSE_ID_PATH_VAR_NAME) Long warehouseId)

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public interface ShoppingBasketService {
+
     /**
      * Получение конкретной корзины по её ID и ID покупателя.
      * @param customerId ID покупателя.

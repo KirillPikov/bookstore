@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public interface WarehouseBookService {
+
     /**
      * Получение страницы позиций конкретного склада.
      * @param warehouseId ID склада.

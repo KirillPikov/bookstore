@@ -55,11 +55,11 @@ public class ExceptionHandlerController {
             throws HttpMessageNotReadableException {
         return new ResponseEntity<>("Ошибка разбора запроса.. " + hmnre.getMessage(), HttpStatus.BAD_REQUEST);
     }
-/*
+
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> otherException(Exception e)
             throws Exception {
         return new ResponseEntity<>("Произошло что-то странное.. " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }*/
+    }
 }

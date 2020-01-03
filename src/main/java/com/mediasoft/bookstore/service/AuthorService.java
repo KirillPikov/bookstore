@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public interface AuthorService {
+
     /**
      * Получение автора по его ID.
      * @param authorId ID автора, которого хотим получить.

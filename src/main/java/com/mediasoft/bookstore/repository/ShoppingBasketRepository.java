@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface ShoppingBasketRepository extends JpaRepository<ShoppingBasket, Long> {
+
     /**
      * Необходим для получение конкретной корзины по ID, и которая принадледит покупателю с конкретным ID
      *

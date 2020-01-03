@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public interface ShoppingBasketBookService {
+
     /**
      * Получение списка позиций конкретной корзины.
      * @param customerId ID покупателя.

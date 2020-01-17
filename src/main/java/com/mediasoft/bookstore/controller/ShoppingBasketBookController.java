@@ -2,6 +2,7 @@ package com.mediasoft.bookstore.controller;
 
 import com.mediasoft.bookstore.config.PathSettings;
 import com.mediasoft.bookstore.dto.ShoppingBasketBookDto;
+import com.mediasoft.bookstore.entity.ShoppingBasket;
 import com.mediasoft.bookstore.entity.ShoppingBasketBook;
 import com.mediasoft.bookstore.exception.EntityNotFoundException;
 import com.mediasoft.bookstore.mapper.ShoppingBasketBookMapper;
@@ -62,6 +63,9 @@ public class ShoppingBasketBookController {
     ) {
         /* Получение данной корзины с помощью сервиса */
         ShoppingBasketBook shoppingBasketBook = shoppingBasketBookMapper.toEntity(shoppingBasketBookDto);
+        ShoppingBasket tempShoppingBasket = new ShoppingBasket();
+        tempShoppingBasket.setId(shoppingBasketId);
+        shoppingBasketBook.setShoppingBasket(tempShoppingBasket);
         /* Добавление новой позиции в данную корзину */
         shoppingBasketBookService.addShoppingBasketBook(customerId, shoppingBasketId, shoppingBasketBook);
         return new ResponseEntity(HttpStatus.CREATED);

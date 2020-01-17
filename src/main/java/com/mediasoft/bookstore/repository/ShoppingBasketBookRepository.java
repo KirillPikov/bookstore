@@ -18,6 +18,14 @@ public interface ShoppingBasketBookRepository extends JpaRepository<ShoppingBask
     Boolean existsByShoppingBasket_IdAndBook_Id(Long shoppingBasketId, Long bookId);
 
     /**
+     * Получение позиции из конкретной корзины с конкретной книгой.
+     * @param shoppingBasketId  ID корзины.
+     * @param bookId ID книги.
+     * @return
+     */
+    Optional<ShoppingBasketBook> getByShoppingBasketIdAndBookId(Long shoppingBasketId, Long bookId);
+
+    /**
      * Получение позиции по её ID и ID корзины.
      * @param shoppingBasketId ID корзины.
      * @param shoppingBasketBookId ID позиции.

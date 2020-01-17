@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class ShoppingBasketBookMapperImpl implements ShoppingBasketBookMapper {
@@ -26,10 +28,13 @@ public class ShoppingBasketBookMapperImpl implements ShoppingBasketBookMapper {
         } else {
             shoppingBasketBook = new ShoppingBasketBook();
             shoppingBasketBook.setId(shoppingBasketBookDto.getId());
+            Long shoppingBasketId = shoppingBasketBookDto.getShoppingBasketId();
             shoppingBasketBook.setShoppingBasket(
-                    shoppingBasketRepository.findById(
-                            shoppingBasketBookDto.getShoppingBasketId()
-                    ).orElse(null)
+                    Objects.nonNull(shoppingBasketId) ?
+                        shoppingBasketRepository.findById(
+                                shoppingBasketId
+                        ).orElse(null)
+                    : null
             );
             shoppingBasketBook.setBook(
                     bookMapper.toEntity(

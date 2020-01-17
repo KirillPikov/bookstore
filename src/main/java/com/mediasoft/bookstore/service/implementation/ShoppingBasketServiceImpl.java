@@ -71,6 +71,7 @@ public class ShoppingBasketServiceImpl implements ShoppingBasketService {
      */
     @Override
     public void addShoppingBasket(Long customerId, ShoppingBasket shoppingBasket) {
+        shoppingBasket.setShoppingBasketStatus(ShoppingBasketStatus.ACTIVE);
         shoppingBasket.setCustomer(
                 customerService.getCustomer(customerId)
         );

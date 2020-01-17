@@ -100,8 +100,7 @@ public class ShoppingBasketBookServiceImpl implements ShoppingBasketBookService 
         /* Находим корзину с переданными параметрами. */
         ShoppingBasket shoppingBasket = shoppingBasketService.getShoppingBasket(customerId, shoppingBasketId);
         /* Затем пробуем найти позицию, для которой существует такая корзина с такой книгой */
-        shoppingBasketBookRepository.getByIdAndShoppingBasket_IdAndBook_Id(
-                shoppingBasketBookId,
+        shoppingBasketBookRepository.getByShoppingBasketIdAndBookId(
                 shoppingBasket.getId(),
                 shoppingBasketBook.getBook().getId()
         ).ifPresentOrElse(
